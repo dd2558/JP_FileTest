@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.erum.mapper.FileMapper">
+    <insert id="insertFile" parameterType="com.study.erum.model.File">
+        INSERT INTO file (username, filename, filepath) VALUES (#{username}, #{filename}, #{filepath})
+    </insert>
+    
+    <select id="getFilesByUsername" parameterType="String" resultType="com.study.erum.model.File">
+        SELECT * FROM file WHERE username = #{username}
+    </select>
+    
+     <select id="getAllImageUrls" resultType="string" >
+        SELECT filepath
+        FROM file;
+    </select>
+    
+    <select id="getFile" parameterType="Long" resultType="com.study.erum.model.File">
+        SELECT * FROM file WHERE id = #{id}
+    </select>
+</mapper>        
