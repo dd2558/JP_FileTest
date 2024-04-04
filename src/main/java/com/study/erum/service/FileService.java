@@ -19,8 +19,12 @@ public class FileService {
     public void insertFile(File file) {
         fileMapper.insertFile(file);
     }
-    public List<File> getFilesByPlaceName(String placeName) {
-        return fileMapper.getFilesByPlaceName(placeName);
+    public List<File> getFilesByPlaceName(String place_name) {
+        return fileMapper.getFilesByPlaceName(place_name);
+    }
+    
+    public List<File> getFilesByHashTag(String hashtag) {
+        return fileMapper.getFilesByHashTag(hashtag);
     }
     
     public File getFile(Long id) {

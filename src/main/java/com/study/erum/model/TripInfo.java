@@ -15,7 +15,7 @@ public class TripInfo {
     private String address;
     private int rating;
     private String author;
-    private String phone_number;
-    private String sns_url;
-    private String other_info;
+    private String phoneNumber;
+    private String snsUrl;
+    private String otherInfo;
 }

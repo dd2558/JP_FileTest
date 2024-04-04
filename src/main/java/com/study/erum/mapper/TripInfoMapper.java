@@ -7,4 +7,6 @@ public interface TripInfoMapper {
     void insertTripInfo(TripInfo tripInfo);
     
     TripInfo getTripInfoByPlaceName(String place_name);
+
+    TripInfo getTripInfoByHashTag(String hashtag);
 }

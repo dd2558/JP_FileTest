@@ -8,11 +8,18 @@
     <!-- TripInfo 테이블에 데이터 삽입하는 쿼리문 -->
     <insert id="insertTripInfo" parameterType="com.study.erum.model.TripInfo">
         INSERT INTO trip_info (hashtag, place_name, description, address, rating, author, phone_number, sns_url, other_info)
-        VALUES (#{hashtag}, #{place_name}, #{description}, #{address}, #{rating}, #{author}, #{phone_number}, #{sns_url}, #{other_info})
+        VALUES (#{hashtag}, #{place_name}, #{description}, #{address}, #{rating}, #{author}, #{phoneNumber}, #{snsUrl}, #{otherInfo})
     </insert>
-    <!-- 여행지명으로 데이터를 읽는 쿼리 (여러 개의 결과를 반환) -->
-  <select id="getTripInfoByPlaceName" resultType="com.study.erum.model.TripInfo" parameterType="java.lang.String">
-    SELECT * FROM trip_info WHERE place_name = #{place_name} LIMIT 1
-</select>
+    <!-- 여행지명으로 데이터를 읽는 쿼리 -->
+	 <select id="getTripInfoByPlaceName" resultType="com.study.erum.model.TripInfo">
+       SELECT * FROM trip_info WHERE place_name = #{placeName} LIMIT 1
+
+    </select>
+    
+     <!-- HashTag로 데이터를 읽는 쿼리 -->
+	 <select id="getTripInfoByHashTag" resultType="com.study.erum.model.TripInfo">
+       SELECT * FROM trip_info WHERE hashtag = #{hashtag} LIMIT 1
+
+    </select>
 	
 </mapper>

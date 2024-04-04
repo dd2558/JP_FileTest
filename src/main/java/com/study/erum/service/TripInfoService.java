@@ -24,4 +24,8 @@ public class TripInfoService {
     public TripInfo getTripInfoByPlaceName(String place_name) {
         return tripInfoMapper.getTripInfoByPlaceName(place_name);
     }
+    
+    public TripInfo getTripInfoByHashTag(String hashtag) {
+        return tripInfoMapper.getTripInfoByHashTag(hashtag);
+    }
 }

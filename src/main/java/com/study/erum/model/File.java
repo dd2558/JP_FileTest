@@ -12,9 +12,10 @@ import lombok.ToString;
 public class File {
 	private Long id;
     private String username;
-    private String placeName;
+    private String place_name;
     private String filename;
     private String filepath;
     private LocalDateTime createdAt;
+    private String hashtag;
 
 }

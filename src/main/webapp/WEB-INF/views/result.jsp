@@ -4,23 +4,25 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>여행 정보</title>
+    <title>여행 정보와 사진 목록</title>
 </head>
 <body>
     <h1>여행 정보</h1>
     
-    <h2>장소 이름: ${tripInfo.place_name}</h2>
-    <p>설명: ${tripInfo.description}</p>
-    <p>주소: ${tripInfo.address}</p>
-    <p>평점: ${tripInfo.rating}/5</p>
-
+    <c:if test="${not empty tripInfo}">
+        <p>해시태그: ${tripInfo.hashtag}</p>
+        <!-- 다른 정보들도 필요한 만큼 출력 -->
+    </c:if>
+    
     <h2>사진 목록</h2>
     <ul>
-        <c:if test="${not empty files}">
-    <img src="${files[0].filepath}" style="width:150px;">
-		</c:if>
+        <c:forEach var="file" items="${files}">
+            <li>
+                <img src="${file.filepath}" style="width:150px;">
+                <p>여행지명: ${file.place_name}</p>
+                <!-- 기타 필요한 정보들도 출력 가능 -->
+            </li>
+        </c:forEach>
     </ul>
-    <a href="/detail?place_name=${tripInfo.place_name}">상세보기</a>
-
 </body>
 </html>
