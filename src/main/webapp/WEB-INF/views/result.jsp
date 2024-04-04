@@ -4,25 +4,31 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>여행 정보와 사진 목록</title>
+    <title>여행 정보 상세 페이지</title>
 </head>
 <body>
-    <h1>여행 정보</h1>
+    <h1>장소 이름: ${tripInfo.place_name }</h1>
     
-    <c:if test="${not empty tripInfo}">
-        <p>해시태그: ${tripInfo.hashtag}</p>
-        <!-- 다른 정보들도 필요한 만큼 출력 -->
-    </c:if>
-    
-    <h2>사진 목록</h2>
+    <!-- 파일 목록 -->
+    <h2>파일 목록</h2>
     <ul>
-        <c:forEach var="file" items="${files}">
-            <li>
-                <img src="${file.filepath}" style="width:150px;">
-                <p>여행지명: ${file.place_name}</p>
-                <!-- 기타 필요한 정보들도 출력 가능 -->
-            </li>
+        <!-- 이미지를 차례로 표시 -->
+        <c:forEach var="file" items="${files}" varStatus="loop">
+            <!-- 현재 파일의 place_name과 이전 파일의 place_name이 같은지 확인 -->
+            <c:if test="${loop.first or file.place_name ne files[loop.index - 1].place_name}">
+                <li>
+                    <a href="/detail?place=${file.place_name}&hashtag=${file.hashtag}">
+                        <img src="${file.filepath}" style="width:150px;">
+                    </a>
+                </li>
+                <p>여행지명: <a href="/detail?place=${file.place_name}&hashtag=${file.hashtag}">${file.place_name}</a></p>
+                <p>한줄소개: ${file.description}</p>
+                <p>주소: ${file.address}</p>
+                <p>평점: ${file.rating}/5</p>
+            </c:if>
         </c:forEach>
     </ul>
+    
+    <!-- 설명은 한 번만 표시 -->
 </body>
 </html>
