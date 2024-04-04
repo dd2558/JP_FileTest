@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.study.erum.mapper.TripInfoMapper">
+
+    <!-- TripInfo 테이블에 데이터 삽입하는 쿼리문 -->
+    <insert id="insertTripInfo" parameterType="com.study.erum.model.TripInfo">
+        INSERT INTO trip_info (hashtag, place_name, description, address, rating, author, phone_number, sns_url, other_info)
+        VALUES (#{hashtag}, #{place_name}, #{description}, #{address}, #{rating}, #{author}, #{phone_number}, #{sns_url}, #{other_info})
+    </insert>
+    <!-- 여행지명으로 데이터를 읽는 쿼리 -->
+	 <select id="getTripInfoByPlaceName" resultType="com.study.erum.model.TripInfo">
+       SELECT * FROM trip_info WHERE place_name = #{placeName} LIMIT 1
+
+    </select>
+	
+</mapper>

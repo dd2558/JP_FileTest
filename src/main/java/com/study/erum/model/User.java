@@ -12,7 +12,6 @@ import lombok.ToString;
 public class User {
     private Long id;
     private String username;
-    private String content;
     private LocalDateTime createdAt;
 
     // Getters and setters

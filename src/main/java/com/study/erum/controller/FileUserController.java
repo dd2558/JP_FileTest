@@ -21,8 +21,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.study.erum.model.File;
+import com.study.erum.model.TripInfo;
 import com.study.erum.model.User;
 import com.study.erum.service.FileService;
+import com.study.erum.service.TripInfoService;
 import com.study.erum.service.UserService;
 
 @Controller
@@ -32,11 +34,80 @@ public class FileUserController {
     private UserService userService;
 
     @Autowired
+    private TripInfoService tripInfoService;
+    
+    @Autowired
     private FileService fileService;
     @RequestMapping("/")
     public String uploadForm() {
         return "form";
     }
+    
+    @GetMapping("/detail")
+    public String showDetailPage(@RequestParam("place_name") String place_name, Model model) {
+        // place_name을 이용하여 해당하는 여행 정보를 데이터베이스에서 조회
+        TripInfo tripInfo = tripInfoService.getTripInfoByPlaceName(place_name);
+        List<File> files = fileService.getFilesByPlaceName(place_name); // 이미지 불러오기
+        
+        // 조회된 여행 정보를 모델에 추가
+        model.addAttribute("tripInfo", tripInfo);
+        //조회된 파일정보를 모델에 추가
+        model.addAttribute("files", files);
+        // detail.jsp 페이지로 이동
+        return "detail";
+    }
+
+    
+    @PostMapping("/addUserAndFile")
+    public String addUserAndFile(@RequestParam("username") String username,
+                                  @RequestParam("place_name") String place_name,
+                                  @RequestParam("hashtag") String hashtag,
+                                  @RequestParam("description") String description,
+                                  @RequestParam("address") String address,
+                                  @RequestParam("rating") int rating,
+                                  @RequestParam("author") String author,
+                                  @RequestParam("phone_number") String phone_number,
+                                  @RequestParam("sns_url") String sns_url,
+                                  @RequestParam("other_info") String other_info,
+                                  @RequestParam("file") MultipartFile[] files) throws UnsupportedEncodingException {
+        
+        // 사용자 정보 삽입
+        User user = new User();
+        user.setUsername(username);
+        userService.insertUser(user);
+        System.out.println(user);
+        
+        // 여행 정보 삽입
+        TripInfo tripInfo = new TripInfo();
+        tripInfo.setPlace_name(place_name); 
+        tripInfo.setHashtag(hashtag);
+        tripInfo.setDescription(description);
+        tripInfo.setAddress(address);
+        tripInfo.setRating(rating);
+        tripInfo.setAuthor(author);
+        tripInfo.setPhone_number(phone_number);
+        tripInfo.setSns_url(sns_url);
+        tripInfo.setOther_info(other_info);
+        tripInfoService.insertTripInfo(tripInfo);
+        System.out.println(tripInfo);
+        
+        // 파일 정보 삽입
+        int fileCount = Math.min(files.length, 3); // 최대 3개의 파일 업로드
+        for (int i = 0; i < fileCount; i++) {
+            MultipartFile file = files[i];
+            String originalFilename = file.getOriginalFilename();
+            try {
+                insertAndSaveFile(username, originalFilename, place_name, file);
+            } catch (IOException e) {
+                e.printStackTrace();
+                // 파일 저장 실패 처리
+            }
+        }
+
+        return "redirect:/result?place_name=" + URLEncoder.encode(place_name, "UTF-8");
+    }
+
+
 
 
  // 파일 확장자를 확인하고 지정하는 메서드
@@ -73,41 +144,20 @@ public class FileUserController {
     }
 
     // 파일 정보 삽입 및 저장 메서드
-    private void insertAndSaveFile(String username, String originalFilename, MultipartFile file) throws IOException {
+    private void insertAndSaveFile(String username, String originalFilename, String placeName, MultipartFile file) throws IOException {
         String filename = saveFile(file);
         String webPath = generateWebPath(filename);
         File fileInfo = new File();
         fileInfo.setUsername(username);
+        fileInfo.setPlaceName(placeName); // 여기서 placeName을 설정
         fileInfo.setFilename(originalFilename); // 원래 파일명 설정
         fileInfo.setFilepath(webPath); // 웹 경로 설정
         fileService.insertFile(fileInfo);
+        System.out.println(fileInfo);
     }
 
-    @PostMapping("/addUserAndFile")
-    public String addUserAndFile(@RequestParam("username") String username, 
-                                 @RequestParam("content") String content,
-                                 @RequestParam("file") MultipartFile[] files) throws UnsupportedEncodingException {
-        // 사용자 정보 삽입
-        User user = new User();
-        user.setUsername(username);
-        user.setContent(content);
-        userService.insertUser(user);
 
-        // 파일 정보 삽입
-        int fileCount = Math.min(files.length, 3); // 최대 3개의 파일 업로드
-        for (int i = 0; i < fileCount; i++) {
-            MultipartFile file = files[i];
-            String originalFilename = file.getOriginalFilename();
-            try {
-                insertAndSaveFile(username, originalFilename, file);
-            } catch (IOException e) {
-                e.printStackTrace();
-                // 파일 저장 실패 처리
-            }
-        }
-
-        return "redirect:/result?username=" + URLEncoder.encode(username, "UTF-8");
-    }
+   
     
 
     @GetMapping("/uploaded-images/{filename:.+}")
@@ -118,15 +168,20 @@ public class FileUserController {
 
 
     @GetMapping("/result")
-    public String showResult(@RequestParam("username") String username, Model model) {
-        // 사용자 정보 및 파일 정보 조회
-        User user = userService.getUserByUsername(username);
-        List<File> files = fileService.getFilesByUsername(username);
+    public String showResult(@RequestParam("place_name") String place_name, Model model) {
+        System.out.println("Place Name: " + place_name); // placeName 출력하여 확인
+        // 여행 정보 및 파일 정보 조회
+        TripInfo tripInfo = tripInfoService.getTripInfoByPlaceName(place_name);
+        if (tripInfo == null) {
+            System.out.println("No trip info found for place: " + place_name);
+        }
+        List<File> files = fileService.getFilesByPlaceName(place_name);
 
         // 모델에 데이터 추가
-        model.addAttribute("user", user);
+        model.addAttribute("tripInfo", tripInfo);
+        System.out.println("tripInfo왜null이냐"+tripInfo);
         model.addAttribute("files", files);
-        
         return "result"; // 결과 페이지로 이동
     }
+
 }

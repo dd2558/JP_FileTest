@@ -19,8 +19,8 @@ public class FileService {
     public void insertFile(File file) {
         fileMapper.insertFile(file);
     }
-    public List<File> getFilesByUsername(String username) {
-        return fileMapper.getFilesByUsername(username);
+    public List<File> getFilesByPlaceName(String placeName) {
+        return fileMapper.getFilesByPlaceName(placeName);
     }
     
     public File getFile(Long id) {

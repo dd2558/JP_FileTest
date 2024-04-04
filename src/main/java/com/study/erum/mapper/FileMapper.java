@@ -6,6 +6,6 @@ import com.study.erum.model.File;
 
 public interface FileMapper {
     void insertFile(File file);
-    List<File> getFilesByUsername(String username);
+    List<File> getFilesByPlaceName(String placeName);
     File getFile(Long id);
 }

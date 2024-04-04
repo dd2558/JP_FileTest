@@ -4,24 +4,23 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>이미지 표시</title>
+    <title>여행 정보</title>
 </head>
-
 <body>
-    <h1>이미지 표시</h1>
-    <h2>사용자 정보</h2>
-    <p>사용자 이름: ${user.username}</p>
-    <p>사용자 내용: ${user.content}</p>
+    <h1>여행 정보</h1>
+    
+    <h2>장소 이름: ${tripInfo.place_name}</h2>
+    <p>설명: ${tripInfo.description}</p>
+    <p>주소: ${tripInfo.address}</p>
+    <p>평점: ${tripInfo.rating}/5</p>
 
-    <h2>파일 목록</h2>
+    <h2>사진 목록</h2>
     <ul>
-        <c:forEach var="file" items="${files}">
-            <li>
-                <img src="${file.filepath}" style="width:150px;">
-                <form action="/delete-images/${file.filename}" method="post">
-                </form>
-            </li>
-        </c:forEach>
+        <c:if test="${not empty files}">
+ 		   <img src="${files[0].filepath}" style="width:150px;">
+		</c:if>
     </ul>
+    <a href="/detail?place_name=${tripInfo.place_name}">상세보기</a>
+
 </body>
 </html>
