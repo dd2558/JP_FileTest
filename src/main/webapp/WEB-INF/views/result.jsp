@@ -17,7 +17,7 @@
     <h2>사진 목록</h2>
     <ul>
         <c:if test="${not empty files}">
- 		   <img src="${files[0].filepath}" style="width:150px;">
+    <img src="${files[0].filepath}" style="width:150px;">
 		</c:if>
     </ul>
     <a href="/detail?place_name=${tripInfo.place_name}">상세보기</a>

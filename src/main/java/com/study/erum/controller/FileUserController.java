@@ -44,19 +44,20 @@ public class FileUserController {
     }
     
     @GetMapping("/detail")
-    public String showDetailPage(@RequestParam("place_name") String place_name, Model model) {
-        // place_name을 이용하여 해당하는 여행 정보를 데이터베이스에서 조회
-        TripInfo tripInfo = tripInfoService.getTripInfoByPlaceName(place_name);
-        List<File> files = fileService.getFilesByPlaceName(place_name); // 이미지 불러오기
-        
-        // 조회된 여행 정보를 모델에 추가
-        model.addAttribute("tripInfo", tripInfo);
-        //조회된 파일정보를 모델에 추가
-        model.addAttribute("files", files);
-        // detail.jsp 페이지로 이동
-        return "detail";
-    }
-
+    	public String showDetail(@RequestParam("place_name") String place_name, Model model) {
+            // placeName을 사용하여 해당 장소의 정보를 가져오는 로직을 구현
+            // 가져온 정보를 모델에 담아서 result.jsp로 전달
+    	TripInfo tripInfo = tripInfoService.getTripInfoByPlaceName(place_name);
+        if (tripInfo == null) {
+            System.out.println("No trip info found for place: " + place_name);
+        }
+        List<File> files = fileService.getFilesByPlaceName(place_name);
+        	model.addAttribute("files", files);
+            model.addAttribute("tripInfo", tripInfo);
+            // 가져온 정보를 result.jsp로 전달하여 출력
+            return "detail";
+        }
+    
     
     @PostMapping("/addUserAndFile")
     public String addUserAndFile(@RequestParam("username") String username,
