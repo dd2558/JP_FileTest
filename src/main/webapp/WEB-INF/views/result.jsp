@@ -25,6 +25,7 @@
                 <p>한줄소개: ${file.description}</p>
                 <p>주소: ${file.address}</p>
                 <p>평점: ${file.rating}/5</p>
+                <a href="/delete?filename=${file.filename}">삭제하기</a>
             </c:if>
         </c:forEach>
     </ul>
