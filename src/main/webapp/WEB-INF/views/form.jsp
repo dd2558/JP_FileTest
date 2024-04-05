@@ -39,7 +39,8 @@
     <button type="submit">Submit</button>
 </form>
 
-
+<a href="http://localhost:8092/result?hashtag=테마">테마보기</a>
+<a href="http://localhost:8092/result?hashtag=야경">야경보기</a>
 
 
 </body>
