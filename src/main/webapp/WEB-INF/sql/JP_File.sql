@@ -7,14 +7,8 @@ CREATE TABLE file_users (
 CREATE TABLE trip_info (
     id INT AUTO_INCREMENT PRIMARY KEY,
     hashtag VARCHAR(255),
-    place_name VARCHAR(255),
-    description VARCHAR(255),	
-    address VARCHAR(255),
-    rating FLOAT,
-    author VARCHAR(255),
-    phone_number VARCHAR(20),
-    sns_url VARCHAR(255),
-    other_info VARCHAR(255)
+    place_name VARCHAR(255)
+  
 );
 
 
@@ -26,7 +20,15 @@ CREATE TABLE file (
     place_name VARCHAR(255),
     filename VARCHAR(255) NOT NULL,
     filepath VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    hashtag varchar(100) NOT null,
+     description VARCHAR(255),   
+    address VARCHAR(255),
+    rating FLOAT,
+    author VARCHAR(255),
+    phone_number VARCHAR(20),
+    sns_url VARCHAR(255),
+    other_info VARCHAR(255)
 );
 
 select * from file_users;

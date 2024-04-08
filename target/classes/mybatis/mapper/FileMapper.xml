@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
         
 <mapper namespace="com.study.erum.mapper.FileMapper">
 
     <insert id="insertFile" parameterType="com.study.erum.model.File">
-        INSERT INTO file ( username, place_name, filename, filepath, hashtag ) 
-        VALUES ( #{username}, #{place_name}, #{filename}, #{filepath}, #{hashtag})
+        INSERT INTO file ( username, placeName, filename, filepath, hashtag,description, address, rating, author, phone_number, sns_url, other_info)
+        VALUES ( #{username}, #{placeName}, #{filename}, #{filepath}, #{hashtag}, #{description}, #{address}, #{rating}, #{author}, #{phone_number}, #{sns_url}, #{other_info})
     </insert>
     
     <select id="getFilesByPlaceName" parameterType="String" resultType="com.study.erum.model.File">
-       SELECT * FROM file WHERE place_name = #{place_name}
+       SELECT * FROM file WHERE placeName = #{placeName}
     </select>
     
      <select id="getFilesByHashTag" parameterType="String" resultType="com.study.erum.model.File">
@@ -25,4 +25,63 @@
     <select id="getFile" parameterType="Long" resultType="com.study.erum.model.File">
         SELECT * FROM file WHERE id = #{id}
     </select>
+    
+    <select id="getFileById" parameterType="long" resultType="com.study.erum.model.File">
+        SELECT *
+        FROM file
+        WHERE id = #{fileId}
+    </select>
+    
+<!--     <update id="updateFile" parameterType="com.study.erum.model.File" > -->
+<!--    	UPDATE file -->
+<!--    	<set> -->
+<!--         <if test="place_name != null">place_name = #{place_name},</if> -->
+<!--         <if test="description != null">description = #{description},</if> -->
+<!--         <if test="address != null">address = #{address},</if> -->
+<!--         <if test="rating != null">rating = #{rating},</if> -->
+<!--         <if test="author != null">author = #{author},</if> -->
+<!--         <if test="phone_number != null">phone_number = #{phone_number},</if> -->
+<!--         <if test="sns_url != null">sns_url = #{sns_url},</if> -->
+<!--         <if test="other_info != null">other_info = #{other_info},</if>  -->
+<!--     </set> -->
+<!--    		WHERE id = #{id} -->
+<!-- 	</update> -->
+	
+	  
+    <update id="updateFileTest" parameterType="com.study.erum.model.File">
+    UPDATE file
+    SET
+        placeName = #{placeName},
+        description = #{description},
+        address = #{address},
+        rating = #{rating},
+        author = #{author},
+        phone_number = #{phone_number},
+        sns_url = #{sns_url},
+        other_info = #{other_info}
+    WHERE
+        id = #{id}
+</update>
+	
+	
+	
+<update id="updateFile" parameterType="com.study.erum.model.File">
+    UPDATE file
+    SET
+        placeName = #{placeName},
+        description = #{description},
+        address = #{address},
+        rating = #{rating},
+        author = #{author},
+        phone_number = #{phone_number},
+        sns_url = #{sns_url},
+        other_info = #{other_info}
+    WHERE id = #{id}
+</update>
+    
+    <delete id="deleteFileByName" parameterType="String">
+        DELETE FROM file
+        WHERE filename = #{filename}
+    </delete>
+    
 </mapper>        

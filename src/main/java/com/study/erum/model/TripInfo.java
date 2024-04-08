@@ -10,12 +10,5 @@ import lombok.ToString;
 public class TripInfo {
 	private int id;
     private String hashtag;
-    private String place_name;
-    private String description;
-    private String address;
-    private int rating;
-    private String author;
-    private String phoneNumber;
-    private String snsUrl;
-    private String otherInfo;
+    private String placeName;
 }
