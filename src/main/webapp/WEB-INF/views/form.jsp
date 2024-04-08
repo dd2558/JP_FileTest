@@ -16,8 +16,8 @@
 <form action="/addUserAndFile" method="post" enctype="multipart/form-data">
 	<label for="username">사용자:</label>
 	<input type="text" id="username" name="username"><br><br>
-    <label for="place_name">여행지명:</label>
-    <input type="text" id="place_name" name="place_name"><br><br>
+    <label for="placeName">여행지명:</label>
+    <input type="text" id="placeName" name="placeName"><br><br>
     <label for="hashtag">해시태그:</label>
     <input type="text" id="hashtag" name="hashtag"><br><br>
     <label for="description">한줄소개:</label>
@@ -39,8 +39,8 @@
     <button type="submit">Submit</button>
 </form>
 
-<a href="http://localhost:8092/result?hashtag=테마">테마보기</a>
-<a href="http://localhost:8092/result?hashtag=야경">야경보기</a>
+<a href="/result?hashtag=테마">테마보기</a>
+<a href="/result?hashtag=야경">야경보기</a>
 
 
 </body>

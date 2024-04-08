@@ -16,7 +16,7 @@
         <!-- 해당 장소에 대한 이미지를 우선 모두 출력 -->
         <c:forEach var="file" items="${files}">
             <!-- 현재 파일이 선택한 장소와 같은 장소일 때 이미지 출력 -->
-            <c:if test="${file.place_name eq placeName}">
+            <c:if test="${file.placeName eq placeName}">
                 <div>
                     <img src="${file.filepath}" style="width:150px;">
                 </div>
@@ -31,12 +31,12 @@
         <!-- 파일 목록을 다시 순회하며 장소 정보 출력 -->
         <c:forEach var="file" items="${files}">
             <!-- 현재 파일이 선택한 장소와 같은 장소일 때 -->
-            <c:if test="${file.place_name eq placeName}">
+            <c:if test="${file.placeName eq placeName}">
                 <!-- 장소 정보가 아직 출력되지 않았다면 -->
                 <c:if test="${not placeInfoDisplayed}">
                     <!-- 장소 정보 출력 -->
                     <li>
-                        <p>여행지명: ${file.place_name}</p>
+                        <p>여행지명: ${file.placeName}</p>
                         <p>주소: ${file.address}</p>
                         <p>연락처: ${file.phone_number}</p>
                         <p>SNS: ${file.sns_url}</p>
